@@ -11,7 +11,6 @@ import java.util.List;
 
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Created by akshay.shah on 08/12/17.
