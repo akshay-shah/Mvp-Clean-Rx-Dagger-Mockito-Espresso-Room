@@ -1,7 +1,6 @@
 package com.example.akshayshah.sampleexample.di;
 
 import com.example.akshayshah.sampleexample.Login.LoginActivity;
-import com.example.akshayshah.sampleexample.MainActivity;
 
 import javax.inject.Singleton;
 
