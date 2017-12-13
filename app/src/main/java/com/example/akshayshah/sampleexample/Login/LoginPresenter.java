@@ -6,6 +6,8 @@ import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -62,5 +64,26 @@ public class LoginPresenter implements LoginContract.Presenter{
             }
         });
     }
+
+    @Override
+    public void putUsers(List<User> users) {
+        mRepository.putAllusers(users, new DataSource.UserLoadedCallback() {
+            @Override
+            public void OnUserLoaded() {
+                mLoginView.allUserPutSuccess("Success Putting all users");
+            }
+        });
+    }
+
+    @Override
+    public void getUsers() {
+        mRepository.getAllUsers(new DataSource.UserLoadedCallback() {
+            @Override
+            public void OnUserLoaded() {
+                mLoginView.allUserPutSuccess("Success getting all users");
+            }
+        });
+    }
+
 
 }

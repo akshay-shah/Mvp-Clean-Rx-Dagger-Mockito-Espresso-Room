@@ -7,6 +7,8 @@ import com.example.akshayshah.sampleexample.data.source.DataSource;
 import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.local.UserDAO;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,6 +33,16 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void removeUser(User user, UserRemoveCallback callback) {
+
+    }
+
+    @Override
+    public void getAllUsers(UserLoadedCallback callback) {
+
+    }
+
+    @Override
+    public void putAllusers(List<User> users, UserLoadedCallback callback) {
 
     }
 

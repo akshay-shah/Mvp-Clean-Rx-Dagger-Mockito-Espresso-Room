@@ -36,4 +36,8 @@ dependencies {
     compile "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"// if you use the support libraries
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    //RxJava & RxAndroid
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJava"
 }

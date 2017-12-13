@@ -13,6 +13,7 @@ import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.local.UserDAO;
 import com.example.akshayshah.sampleexample.data.source.local.UserDatabase;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
+import com.example.akshayshah.sampleexample.utils.AppExecutors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,6 +31,12 @@ public class DataModule {
 
     public DataModule(Context context){
         mContext = context;
+    }
+
+    @Provides
+    @Singleton
+    AppExecutors providesAppExecutors() {
+        return new AppExecutors();
     }
 
     @Provides
@@ -53,9 +60,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    LocalDataSource providesLocalDataSource(UserDAO mUserDao){
+    LocalDataSource providesLocalDataSource(UserDAO mUserDao, AppExecutors appExecutors) {
 //        return LocalDataSource.getInstance(mUserDao);
-        return new LocalDataSource(mUserDao);
+        return new LocalDataSource(mUserDao, appExecutors);
     }
 
     @Provides

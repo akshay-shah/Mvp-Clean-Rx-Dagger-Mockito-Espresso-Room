@@ -7,6 +7,8 @@ import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -36,4 +38,18 @@ public class DataRepository implements DataSource {
         mLocalDataSource.removeUser(user,callback);
         mRemoteDataSource.removeUser(user,callback);
     }
+
+    @Override
+    public void getAllUsers(UserLoadedCallback callback) {
+        mLocalDataSource.getAllUsers(callback);
+        mRemoteDataSource.getAllUsers(callback);
+    }
+
+    @Override
+    public void putAllusers(List<User> users, UserLoadedCallback callback) {
+        mLocalDataSource.putAllusers(users, callback);
+        mRemoteDataSource.putAllusers(users, callback);
+    }
+
+
 }

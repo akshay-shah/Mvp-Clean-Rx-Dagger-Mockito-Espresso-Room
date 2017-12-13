@@ -2,6 +2,8 @@ package com.example.akshayshah.sampleexample.data.source;
 
 import com.example.akshayshah.sampleexample.data.User;
 
+import java.util.List;
+
 /**
  * Created by akshay.shah on 08/12/17.
  */
@@ -15,6 +17,15 @@ public interface DataSource {
         void onRemoveSuccess();
         void onRemoveFail();
     }
+
+    interface UserLoadedCallback {
+        void OnUserLoaded();
+    }
     void putUser(User user,UserPutCallback callback);
     void removeUser(User user,UserRemoveCallback callback);
+
+    void getAllUsers(UserLoadedCallback callback);
+
+    void putAllusers(List<User> users, UserLoadedCallback callback);
+
 }
