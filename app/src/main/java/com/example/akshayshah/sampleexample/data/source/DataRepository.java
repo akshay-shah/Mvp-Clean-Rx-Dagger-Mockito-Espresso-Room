@@ -46,7 +46,7 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public void putAllusers(List<User> users, UserLoadedCallback callback) {
+    public void putAllusers(List<User> users, AllUserPutCallback callback) {
         mLocalDataSource.putAllusers(users, callback);
         mRemoteDataSource.putAllusers(users, callback);
     }

@@ -19,13 +19,17 @@ public interface DataSource {
     }
 
     interface UserLoadedCallback {
-        void OnUserLoaded();
+        void OnUserLoaded(List<User> users);
+    }
+
+    interface AllUserPutCallback {
+        void OnAllUserPut();
     }
     void putUser(User user,UserPutCallback callback);
     void removeUser(User user,UserRemoveCallback callback);
 
     void getAllUsers(UserLoadedCallback callback);
 
-    void putAllusers(List<User> users, UserLoadedCallback callback);
+    void putAllusers(List<User> users, AllUserPutCallback callback);
 
 }

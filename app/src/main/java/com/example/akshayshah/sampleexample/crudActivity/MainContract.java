@@ -1,4 +1,4 @@
-package com.example.akshayshah.sampleexample.Login;
+package com.example.akshayshah.sampleexample.crudActivity;
 
 import com.example.akshayshah.sampleexample.BasePresenter;
 import com.example.akshayshah.sampleexample.BaseView;
@@ -6,29 +6,31 @@ import com.example.akshayshah.sampleexample.data.User;
 
 import java.util.List;
 
-import javax.inject.Singleton;
-
 /**
  * Created by akshay.shah on 08/12/17.
  */
 
-public interface LoginContract {
+public interface MainContract {
     interface Presenter extends BasePresenter{
-        void login();
-        void logout();
+        void addUser();
 
+        void removeUser();
         void putUsers(List<User> users);
-
         void getUsers();
     }
     interface View extends BaseView<Presenter>{
-        void loginError(String msg);
-        void loginSuccess(String msg);
-        void logoutSucces(String msg);
-        void logoutError(String msg);
+        void addError(String msg);
 
+        void addSuccess(String msg);
+
+        void removeError(String msg);
+
+        void removeSuccess(String msg);
         void allUserPutSuccess(String msg);
-
         void allUserPutError(String msg);
+
+        void allUserGetSuccess(List<User> user);
+
+        void allUserGetError(String msg);
     }
 }

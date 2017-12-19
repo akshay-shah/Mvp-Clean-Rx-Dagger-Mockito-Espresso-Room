@@ -1,9 +1,6 @@
-package com.example.akshayshah.sampleexample.Login;
+package com.example.akshayshah.sampleexample.crudActivity;
 
-import com.example.akshayshah.sampleexample.BasePresenter;
-import com.example.akshayshah.sampleexample.R;
 import com.example.akshayshah.sampleexample.data.User;
-import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
 
 import java.util.List;
@@ -14,13 +11,13 @@ import javax.inject.Inject;
  * Created by akshay.shah on 08/12/17.
  */
 
-public class LoginPresenter implements LoginContract.Presenter{
+public class MainPresenter implements MainContract.Presenter {
 
-    private LoginContract.View mLoginView;
+    private MainContract.View mLoginView;
     private DataSource mRepository;
 
     @Inject
-    public LoginPresenter(LoginContract.View view,DataSource mRepository){
+    public MainPresenter(MainContract.View view, DataSource mRepository) {
         mLoginView = view;
         this.mRepository = mRepository;
     }
@@ -35,41 +32,42 @@ public class LoginPresenter implements LoginContract.Presenter{
         mLoginView = null;
     }
 
+
     @Override
-    public void login() {
+    public void addUser() {
         mRepository.putUser(new User(2, "shriram"), new DataSource.UserPutCallback() {
             @Override
             public void onInsertSuccess() {
-                mLoginView.loginSuccess("SuccessFull");
+                mLoginView.addSuccess("SuccessFull");
             }
 
             @Override
             public void onInsertFail() {
-                mLoginView.loginError("Failure");
+                mLoginView.addError("Failure");
             }
         });
     }
 
     @Override
-    public void logout() {
+    public void removeUser() {
         mRepository.removeUser(new User(1, "akshay"), new DataSource.UserRemoveCallback() {
             @Override
             public void onRemoveSuccess() {
-                mLoginView.logoutSucces("Success");
+                mLoginView.removeSuccess("Success");
             }
 
             @Override
             public void onRemoveFail() {
-                mLoginView.logoutError("Error");
+                mLoginView.removeError("Error");
             }
         });
     }
 
     @Override
     public void putUsers(List<User> users) {
-        mRepository.putAllusers(users, new DataSource.UserLoadedCallback() {
+        mRepository.putAllusers(users, new DataSource.AllUserPutCallback() {
             @Override
-            public void OnUserLoaded() {
+            public void OnAllUserPut() {
                 mLoginView.allUserPutSuccess("Success Putting all users");
             }
         });
@@ -79,8 +77,8 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void getUsers() {
         mRepository.getAllUsers(new DataSource.UserLoadedCallback() {
             @Override
-            public void OnUserLoaded() {
-                mLoginView.allUserPutSuccess("Success getting all users");
+            public void OnUserLoaded(List<User> users) {
+                mLoginView.allUserGetSuccess(users);
             }
         });
     }

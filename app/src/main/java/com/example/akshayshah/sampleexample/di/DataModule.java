@@ -1,13 +1,7 @@
 package com.example.akshayshah.sampleexample.di;
 
-import android.arch.persistence.room.PrimaryKey;
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.widget.Button;
 
-import com.example.akshayshah.sampleexample.Login.LoginContract;
-import com.example.akshayshah.sampleexample.Login.LoginPresenter;
-import com.example.akshayshah.sampleexample.R;
 import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.local.UserDAO;
@@ -15,7 +9,6 @@ import com.example.akshayshah.sampleexample.data.source.local.UserDatabase;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
 import com.example.akshayshah.sampleexample.utils.AppExecutors;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;

@@ -69,13 +69,13 @@ public class LocalDataSource implements DataSource {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                List<User> userList = mUserDao.getUser();
+                final List<User> userList = mUserDao.getUser();
                 for (User u : userList)
                     Log.d("USERS","USER ID = "+u.getUserId()+" USERNAME ="+u.getUserName());
                 appExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        callback.OnUserLoaded();
+                        callback.OnUserLoaded(userList);
                     }
                 });
             }
@@ -83,7 +83,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void putAllusers(final List<User> users, final UserLoadedCallback callback) {
+    public void putAllusers(final List<User> users, final AllUserPutCallback callback) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -92,11 +92,12 @@ public class LocalDataSource implements DataSource {
                 appExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        callback.OnUserLoaded();
+                        callback.OnAllUserPut();
                     }
                 });
             }
         });
     }
+
 
 }

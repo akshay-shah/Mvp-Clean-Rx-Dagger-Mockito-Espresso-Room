@@ -1,6 +1,6 @@
 package com.example.akshayshah.sampleexample.di;
 
-import com.example.akshayshah.sampleexample.Login.LoginActivity;
+import com.example.akshayshah.sampleexample.crudActivity.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -13,5 +13,5 @@ import dagger.Component;
 @Component(modules = {DataModule.class})
 @Singleton
 public interface AppComponent {
-    void inject(LoginActivity activity);
+    void inject(MainActivity activity);
 }
