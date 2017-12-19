@@ -15,7 +15,7 @@ import javax.inject.Singleton;
  * Created by akshay.shah on 08/12/17.
  */
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 1, exportSchema = false)
 public abstract class UserDatabase extends RoomDatabase {
 
     private static UserDatabase INSTANCE;
