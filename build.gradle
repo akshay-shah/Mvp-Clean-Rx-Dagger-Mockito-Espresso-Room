@@ -30,4 +30,7 @@ task clean(type: Delete) {
 ext{
     roomVersion = "1.0.0"
     daggerVersion = "2.11"
+    rxAndroid = "2.0.1"
+    rxJava = "2.1.7"
+    roboElectricVerion = "3.6"
 }
