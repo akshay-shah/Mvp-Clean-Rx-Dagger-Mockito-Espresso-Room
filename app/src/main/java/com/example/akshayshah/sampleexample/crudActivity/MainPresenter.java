@@ -34,8 +34,8 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     @Override
-    public void addUser() {
-        mRepository.putUser(new User(2, "shriram"), new DataSource.UserPutCallback() {
+    public void addUser(User user) {
+        mRepository.putUser(user, new DataSource.UserPutCallback() {
             @Override
             public void onInsertSuccess() {
                 mLoginView.addSuccess("SuccessFull");
@@ -49,8 +49,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void removeUser() {
-        mRepository.removeUser(new User(1, "akshay"), new DataSource.UserRemoveCallback() {
+    public void removeUser(User user) {
+        mRepository.removeUser(user, new DataSource.UserRemoveCallback() {
             @Override
             public void onRemoveSuccess() {
                 mLoginView.removeSuccess("Success");
@@ -67,8 +67,8 @@ public class MainPresenter implements MainContract.Presenter {
     public void putUsers(List<User> users) {
         mRepository.putAllusers(users, new DataSource.AllUserPutCallback() {
             @Override
-            public void OnAllUserPut() {
-                mLoginView.allUserPutSuccess("Success Putting all users");
+            public void onAllUserPut() {
+                mLoginView.allUserPutSuccess("Successfully Completed");
             }
         });
     }
@@ -77,7 +77,7 @@ public class MainPresenter implements MainContract.Presenter {
     public void getUsers() {
         mRepository.getAllUsers(new DataSource.UserLoadedCallback() {
             @Override
-            public void OnUserLoaded(List<User> users) {
+            public void onUserLoaded(List<User> users) {
                 mLoginView.allUserGetSuccess(users);
             }
         });

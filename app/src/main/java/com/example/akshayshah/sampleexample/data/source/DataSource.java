@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public interface DataSource {
+
     interface UserPutCallback{
         void onInsertSuccess();
         void onInsertFail();
@@ -19,13 +20,15 @@ public interface DataSource {
     }
 
     interface UserLoadedCallback {
-        void OnUserLoaded(List<User> users);
+        void onUserLoaded(List<User> users);
     }
 
     interface AllUserPutCallback {
-        void OnAllUserPut();
+        void onAllUserPut();
     }
+
     void putUser(User user,UserPutCallback callback);
+
     void removeUser(User user,UserRemoveCallback callback);
 
     void getAllUsers(UserLoadedCallback callback);

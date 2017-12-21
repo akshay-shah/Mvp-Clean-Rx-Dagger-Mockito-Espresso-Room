@@ -1,5 +1,6 @@
 package com.example.akshayshah.sampleexample.crudActivity;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         buttonRemoveUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.removeUser();
+                presenter.removeUser(new User(1, "akshay"));
             }
         });
         buttonGetAllUsers.setOnClickListener(new View.OnClickListener() {
@@ -64,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initViews() {
-        buttonAddUser = (Button) findViewById(R.id.buttonAddUser);
-        buttonRemoveUser = (Button) findViewById(R.id.buttonRemoveUser);
-        buttonGetAllUsers = (Button) findViewById(R.id.buttonGetUser);
-        listViewAllUsers = (ListView) findViewById(R.id.listViewAllUsers);
+        buttonAddUser = findViewById(R.id.buttonAddUser);
+        buttonRemoveUser = findViewById(R.id.buttonRemoveUser);
+        buttonGetAllUsers = findViewById(R.id.buttonGetUser);
+        listViewAllUsers = findViewById(R.id.listViewAllUsers);
     }
 
 
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void allUserGetSuccess(List<User> users) {
         List userStrings = new ArrayList();

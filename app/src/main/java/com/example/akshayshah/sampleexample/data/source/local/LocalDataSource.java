@@ -75,7 +75,7 @@ public class LocalDataSource implements DataSource {
                 appExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        callback.OnUserLoaded(userList);
+                        callback.onUserLoaded(userList);
                     }
                 });
             }
@@ -92,7 +92,7 @@ public class LocalDataSource implements DataSource {
                 appExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        callback.OnAllUserPut();
+                        callback.onAllUserPut();
                     }
                 });
             }
