@@ -36,8 +36,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+
+        //Initializing DaggerAppComponent with Activity Context
         AppComponent appComponent = DaggerAppComponent.builder().dataModule(new DataModule(this)).build();
         appComponent.inject(this);
+
         presenter = new MainPresenter(this, mDataRepository);
         final List<User> usersList = new ArrayList<>();
         usersList.add(new User(1, "akshay"));
