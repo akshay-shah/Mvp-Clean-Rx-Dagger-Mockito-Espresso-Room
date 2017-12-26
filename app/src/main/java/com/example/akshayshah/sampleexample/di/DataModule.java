@@ -8,6 +8,8 @@ import com.example.akshayshah.sampleexample.data.source.local.UserDAO;
 import com.example.akshayshah.sampleexample.data.source.local.UserDatabase;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
 import com.example.akshayshah.sampleexample.utils.AppExecutors;
+import com.example.akshayshah.sampleexample.utils.schedulers.BaseSchedulerProvider;
+import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -24,6 +26,12 @@ public class DataModule {
 
     public DataModule(Context context){
         mContext = context;
+    }
+
+    @Provides
+    @Singleton
+    BaseSchedulerProvider providesScheduler() {
+        return new SchedulerProvider();
     }
 
     @Provides

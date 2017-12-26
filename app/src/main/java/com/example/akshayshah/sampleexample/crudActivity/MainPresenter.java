@@ -24,7 +24,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mLoginView;
     private DataSource mRepository;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private BaseSchedulerProvider schedulerProvider = SchedulerProvider.getInstance();
+    private BaseSchedulerProvider schedulerProvider;
 
     @Inject
     public MainPresenter(MainContract.View view, DataSource mRepository, BaseSchedulerProvider schedulerProvider) {

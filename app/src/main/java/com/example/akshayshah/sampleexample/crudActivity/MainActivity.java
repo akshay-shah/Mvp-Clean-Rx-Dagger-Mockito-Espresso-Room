@@ -16,6 +16,7 @@ import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.di.AppComponent;
 import com.example.akshayshah.sampleexample.di.DaggerAppComponent;
 import com.example.akshayshah.sampleexample.di.DataModule;
+import com.example.akshayshah.sampleexample.utils.schedulers.BaseSchedulerProvider;
 import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private ListView listViewAllUsers;
     @Inject
     DataRepository mDataRepository;
+    @Inject
+    BaseSchedulerProvider schedulerProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +45,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         AppComponent appComponent = DaggerAppComponent.builder().dataModule(new DataModule(this)).build();
         appComponent.inject(this);
 
-        presenter = new MainPresenter(this, mDataRepository, SchedulerProvider.getInstance());
+        presenter = new MainPresenter(this, mDataRepository, schedulerProvider);
         final List<User> usersList = new ArrayList<>();
         usersList.add(new User(1, "akshay"));
         usersList.add(new User(2, "shriram"));
         usersList.add(new User(3, "piyush"));
         usersList.add(new User(4, "vikram"));
-        buttonAddUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.putUsers(usersList);
-            }
-        });
-        buttonRemoveUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.removeUser(new User(1, "akshay"));
-            }
-        });
-        buttonGetAllUsers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.getUsers();
-            }
-        });
+        buttonAddUser.setOnClickListener(v -> presenter.putUsers(usersList));
+        buttonRemoveUser.setOnClickListener(v -> presenter.removeUser(new User(1, "akshay")));
+        buttonGetAllUsers.setOnClickListener(v -> presenter.getUsers());
     }
 
     private void initViews() {

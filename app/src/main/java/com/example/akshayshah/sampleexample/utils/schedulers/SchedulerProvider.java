@@ -3,6 +3,8 @@ package com.example.akshayshah.sampleexample.utils.schedulers;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -12,18 +14,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SchedulerProvider implements BaseSchedulerProvider {
-    @Nullable
-    private static SchedulerProvider INSTANCE;
 
-    // Prevent direct instantiation.
-    private SchedulerProvider() {
-    }
+    @Inject
+    public SchedulerProvider() {
 
-    public static synchronized SchedulerProvider getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SchedulerProvider();
-        }
-        return INSTANCE;
     }
 
     @Override
