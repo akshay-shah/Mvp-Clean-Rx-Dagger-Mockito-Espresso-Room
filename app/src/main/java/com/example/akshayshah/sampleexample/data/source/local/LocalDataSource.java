@@ -74,7 +74,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void putAllusers(final List<User> users, final AllUserPutCallback callback) {
+    public void putAllusers(final List<User> users, final UserListPutCallback callback) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {

@@ -21,11 +21,7 @@ public interface DataSource {
         void onRemoveFail();
     }
 
-    interface UserLoadedCallback {
-        void onUserLoaded(List<User> users);
-    }
-
-    interface AllUserPutCallback {
+    interface UserListPutCallback {
         void onAllUserPut();
     }
 
@@ -35,6 +31,6 @@ public interface DataSource {
 
     Flowable<List<User>> getAllUsers();
 
-    void putAllusers(List<User> users, AllUserPutCallback callback);
+    void putAllusers(List<User> users, UserListPutCallback callback);
 
 }

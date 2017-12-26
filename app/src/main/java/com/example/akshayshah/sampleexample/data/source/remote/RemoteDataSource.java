@@ -40,7 +40,7 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void putAllusers(List<User> users, AllUserPutCallback callback) {
+    public void putAllusers(List<User> users, UserListPutCallback callback) {
 
     }
 

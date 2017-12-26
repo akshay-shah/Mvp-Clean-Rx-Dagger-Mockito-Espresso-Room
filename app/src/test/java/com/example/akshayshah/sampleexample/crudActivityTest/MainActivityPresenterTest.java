@@ -1,4 +1,4 @@
-package com.example.akshayshah.sampleexample;
+package com.example.akshayshah.sampleexample.crudActivityTest;
 
 import android.support.annotation.NonNull;
 import android.widget.Button;
@@ -52,10 +52,7 @@ public class MainActivityPresenterTest {
 
     //Captor is used to capture callbacks.
     @Captor
-    private ArgumentCaptor<DataSource.UserLoadedCallback> userLoadedCallbackCaptor;
-
-    @Captor
-    private ArgumentCaptor<DataSource.AllUserPutCallback> userPutCallbackCaptor;
+    private ArgumentCaptor<DataSource.UserListPutCallback> userPutCallbackCaptor;
 
     @Captor
     private ArgumentCaptor<DataSource.UserRemoveCallback> userRemoveCallBackCaptor;
