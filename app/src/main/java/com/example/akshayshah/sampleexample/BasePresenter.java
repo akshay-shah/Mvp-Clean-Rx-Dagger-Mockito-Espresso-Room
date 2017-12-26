@@ -6,6 +6,5 @@ package com.example.akshayshah.sampleexample;
 
 public interface BasePresenter {
     void start();
-
     void destroy();
 }

@@ -26,7 +26,6 @@ public class MainPresenter implements MainContract.Presenter {
     private CompositeDisposable disposable = new CompositeDisposable();
     private BaseSchedulerProvider schedulerProvider;
 
-    @Inject
     public MainPresenter(MainContract.View view, DataSource mRepository, BaseSchedulerProvider schedulerProvider) {
         mLoginView = view;
         this.mRepository = mRepository;
@@ -41,6 +40,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void destroy() {
         mLoginView = null;
+        disposable.clear();
     }
 
 
