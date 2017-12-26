@@ -16,6 +16,7 @@ import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.di.AppComponent;
 import com.example.akshayshah.sampleexample.di.DaggerAppComponent;
 import com.example.akshayshah.sampleexample.di.DataModule;
+import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         AppComponent appComponent = DaggerAppComponent.builder().dataModule(new DataModule(this)).build();
         appComponent.inject(this);
 
-        presenter = new MainPresenter(this, mDataRepository);
+        presenter = new MainPresenter(this, mDataRepository, SchedulerProvider.getInstance());
         final List<User> usersList = new ArrayList<>();
         usersList.add(new User(1, "akshay"));
         usersList.add(new User(2, "shriram"));
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void allUserGetError(String msg) {
-
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,16 +1,14 @@
 package com.example.akshayshah.sampleexample.data.source.remote;
 
-import android.provider.ContactsContract;
-
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
-import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.local.UserDAO;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import io.reactivex.Flowable;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -37,8 +35,8 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getAllUsers(UserLoadedCallback callback) {
-
+    public Flowable<List<User>> getAllUsers() {
+        return null;
     }
 
     @Override

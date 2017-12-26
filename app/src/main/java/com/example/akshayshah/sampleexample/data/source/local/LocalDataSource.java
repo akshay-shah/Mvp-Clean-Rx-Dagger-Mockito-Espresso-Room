@@ -1,9 +1,5 @@
 package com.example.akshayshah.sampleexample.data.source.local;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
 import com.example.akshayshah.sampleexample.utils.AppExecutors;
@@ -12,6 +8,9 @@ import java.util.List;
 
 
 import javax.inject.Inject;
+
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -64,22 +63,14 @@ public class LocalDataSource implements DataSource {
 
     }
 
+    /**
+     * Using RxJava
+     *
+     * @return Flowable Object
+     */
     @Override
-    public void getAllUsers(final UserLoadedCallback callback) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                final List<User> userList = mUserDao.getUser();
-                for (User u : userList)
-                    Log.d("USERS","USER ID = "+u.getUserId()+" USERNAME ="+u.getUserName());
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onUserLoaded(userList);
-                    }
-                });
-            }
-        });
+    public Flowable<List<User>> getAllUsers() {
+        return mUserDao.getUser();
     }
 
     @Override

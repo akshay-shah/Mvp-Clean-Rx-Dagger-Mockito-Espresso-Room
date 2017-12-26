@@ -4,6 +4,8 @@ import com.example.akshayshah.sampleexample.data.User;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 /**
  * Created by akshay.shah on 08/12/17.
  */
@@ -31,7 +33,7 @@ public interface DataSource {
 
     void removeUser(User user,UserRemoveCallback callback);
 
-    void getAllUsers(UserLoadedCallback callback);
+    Flowable<List<User>> getAllUsers();
 
     void putAllusers(List<User> users, AllUserPutCallback callback);
 

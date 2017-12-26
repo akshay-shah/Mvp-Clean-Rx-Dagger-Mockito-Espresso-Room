@@ -2,10 +2,18 @@ package com.example.akshayshah.sampleexample.crudActivity;
 
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
+import com.example.akshayshah.sampleexample.utils.schedulers.BaseSchedulerProvider;
+import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -15,11 +23,14 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mLoginView;
     private DataSource mRepository;
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private BaseSchedulerProvider schedulerProvider = SchedulerProvider.getInstance();
 
     @Inject
-    public MainPresenter(MainContract.View view, DataSource mRepository) {
+    public MainPresenter(MainContract.View view, DataSource mRepository, BaseSchedulerProvider schedulerProvider) {
         mLoginView = view;
         this.mRepository = mRepository;
+        this.schedulerProvider = schedulerProvider;
     }
 
     @Override
@@ -65,23 +76,28 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void putUsers(List<User> users) {
-        mRepository.putAllusers(users, new DataSource.AllUserPutCallback() {
-            @Override
-            public void onAllUserPut() {
-                mLoginView.allUserPutSuccess("Successfully Completed");
-            }
-        });
+        mRepository.putAllusers(users, () -> mLoginView.allUserPutSuccess("Successfully Completed"));
     }
 
+
+    /**
+     * Using RxJava to get users.
+     */
     @Override
     public void getUsers() {
-        mRepository.getAllUsers(new DataSource.UserLoadedCallback() {
-            @Override
-            public void onUserLoaded(List<User> users) {
-                mLoginView.allUserGetSuccess(users);
-            }
-        });
+        disposable.add(mRepository.getAllUsers()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(
+                        users -> {
+                            if (users.size() > 0) {
+                                mLoginView.allUserGetSuccess(users);
+                            } else {
+                                mLoginView.allUserGetError("No users Found");
+                            }
+                        },
+                        throwable -> mLoginView.allUserGetError("Error")
+                ));
     }
-
 
 }

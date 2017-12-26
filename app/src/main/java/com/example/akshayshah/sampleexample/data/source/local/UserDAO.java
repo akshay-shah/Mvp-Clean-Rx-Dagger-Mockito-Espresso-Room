@@ -6,10 +6,15 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.support.annotation.WorkerThread;
 
 import com.example.akshayshah.sampleexample.data.User;
 
 import java.util.List;
+
+import javax.annotation.concurrent.ThreadSafe;
+
+import io.reactivex.Flowable;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -17,8 +22,9 @@ import java.util.List;
 @Dao
 public interface UserDAO {
 
+    //Returning Flowable object via Room Database
     @Query("SELECT * FROM Users")
-    List<User> getUser();
+    Flowable<List<User>> getUser();
 
     @Query("SELECT * FROM Users where UserId = :id")
     User getUserbyId(int id);

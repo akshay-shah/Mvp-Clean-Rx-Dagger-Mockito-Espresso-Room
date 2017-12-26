@@ -1,8 +1,5 @@
 package com.example.akshayshah.sampleexample.data.source;
 
-import android.icu.lang.UScript;
-import android.provider.ContactsContract;
-
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
@@ -10,7 +7,9 @@ import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -39,10 +38,14 @@ public class DataRepository implements DataSource {
         mRemoteDataSource.removeUser(user,callback);
     }
 
+    /**
+     * Using RxJava
+     *
+     * @return Flowable Object
+     */
     @Override
-    public void getAllUsers(UserLoadedCallback callback) {
-        mLocalDataSource.getAllUsers(callback);
-        mRemoteDataSource.getAllUsers(callback);
+    public Flowable<List<User>> getAllUsers() {
+        return mLocalDataSource.getAllUsers();
     }
 
     @Override
