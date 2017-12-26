@@ -1,4 +1,4 @@
-package com.example.akshayshah.sampleexample.crudActivityTest;
+package com.example.akshayshah.sampleexample.crudActivity;
 
 import android.support.annotation.NonNull;
 import android.widget.Button;

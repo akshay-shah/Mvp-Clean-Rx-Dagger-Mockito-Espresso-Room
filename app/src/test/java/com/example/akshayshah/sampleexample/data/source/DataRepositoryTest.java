@@ -1,8 +1,6 @@
-package com.example.akshayshah.sampleexample.data.sourceTest;
+package com.example.akshayshah.sampleexample.data.source;
 
 import com.example.akshayshah.sampleexample.data.User;
-import com.example.akshayshah.sampleexample.data.source.DataRepository;
-import com.example.akshayshah.sampleexample.data.source.DataSource;
 import com.example.akshayshah.sampleexample.data.source.local.LocalDataSource;
 import com.example.akshayshah.sampleexample.data.source.remote.RemoteDataSource;
 import com.google.common.collect.Lists;

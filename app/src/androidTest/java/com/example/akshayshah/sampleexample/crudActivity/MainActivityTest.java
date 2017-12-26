@@ -1,21 +1,19 @@
-package com.example.akshayshah.sampleexample.crudActivityTest;
+package com.example.akshayshah.sampleexample.crudActivity;
 
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.akshayshah.sampleexample.R;
-import com.example.akshayshah.sampleexample.crudActivity.MainActivity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -29,6 +27,7 @@ import static org.hamcrest.Matchers.not;
  * Created by akshay.shah on 26/12/17.
  */
 @RunWith(AndroidJUnit4.class)
+@LargeTest
 public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
