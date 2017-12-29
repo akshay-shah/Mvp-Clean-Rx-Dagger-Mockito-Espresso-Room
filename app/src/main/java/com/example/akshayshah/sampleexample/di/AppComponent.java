@@ -10,7 +10,7 @@ import dagger.Component;
  * Created by akshay.shah on 11/12/17.
  */
 
-@Component(modules = {DataModule.class})
+@Component(modules = {DataModule.class, UseCaseModule.class})
 @Singleton
 public interface AppComponent {
     void inject(MainActivity activity);

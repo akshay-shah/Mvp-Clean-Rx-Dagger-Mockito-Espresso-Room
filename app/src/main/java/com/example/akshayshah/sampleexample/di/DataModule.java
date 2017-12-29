@@ -11,6 +11,7 @@ import com.example.akshayshah.sampleexample.utils.AppExecutors;
 import com.example.akshayshah.sampleexample.utils.schedulers.BaseSchedulerProvider;
 import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -68,6 +69,7 @@ public class DataModule {
 
     @Provides
     @Singleton
+    @Named("DataRepository")
     DataRepository providesDataRepository(LocalDataSource mLocalDataSource, RemoteDataSource mRemoteDataSource){
         return new DataRepository(mLocalDataSource,mRemoteDataSource);
     }

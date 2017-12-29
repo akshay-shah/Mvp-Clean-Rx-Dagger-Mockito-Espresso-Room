@@ -3,9 +3,16 @@ package com.example.akshayshah.sampleexample.crudActivity;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 
+import com.example.akshayshah.sampleexample.UseCase;
+import com.example.akshayshah.sampleexample.UseCaseHandler;
+import com.example.akshayshah.sampleexample.UseCaseScheduler;
 import com.example.akshayshah.sampleexample.crudActivity.MainActivity;
 import com.example.akshayshah.sampleexample.crudActivity.MainContract;
 import com.example.akshayshah.sampleexample.crudActivity.MainPresenter;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.AddAllUsers;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.AddUser;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.GetAllUsers;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.RemoveUser;
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.data.source.DataSource;
@@ -67,24 +74,40 @@ public class MainActivityPresenterTest {
 
     private BaseSchedulerProvider schedulerProvider;
 
+    RemoveUser removeUser;
+
+    AddAllUsers addAllUsers;
+
+    AddUser addUser;
+
+    GetAllUsers getAllUsers;
+
+    UseCaseHandler useCaseHandler;
+
     @Before
     public void Test_buildActivity() {
         MockitoAnnotations.initMocks(this);
         schedulerProvider = new ImmediateSchedulerProvider();
+        useCaseHandler = new UseCaseHandler(new TestUseCaseScheduler());
+        removeUser = new RemoveUser(repository);
+        addAllUsers = new AddAllUsers(repository);
+        addUser = new AddUser(repository);
+        getAllUsers = new GetAllUsers(repository, schedulerProvider);
+
     }
 
     @Test
     public void putUsersTest() {
-        presenter = new MainPresenter(view, repository, null);
+        presenter = new MainPresenter(view, repository, null, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
         presenter.putUsers(users);
         Mockito.verify(repository).putAllusers(eq(users), userPutCallbackCaptor.capture());
         userPutCallbackCaptor.getValue().onAllUserPut();
-        Mockito.verify(view).allUserPutSuccess("Successfully Completed");
+        Mockito.verify(view).allUserPutSuccess("All users inserted");
     }
 
     @Test
     public void removeUserTest() {
-        presenter = new MainPresenter(view, repository, null);
+        presenter = new MainPresenter(view, repository, null, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
         User user = new User(1, "akshay");
         presenter.removeUser(user);
         Mockito.verify(repository).removeUser(eq(user), userRemoveCallBackCaptor.capture());
@@ -94,7 +117,7 @@ public class MainActivityPresenterTest {
 
     @Test
     public void getUserSuccessTest() {
-        presenter = new MainPresenter(view, repository, schedulerProvider);
+        presenter = new MainPresenter(view, repository, schedulerProvider, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
         Mockito.when(repository.getAllUsers()).thenReturn(Flowable.just(users));
         presenter.getUsers();
         Mockito.verify(view).allUserGetSuccess(eq(users));
@@ -102,10 +125,11 @@ public class MainActivityPresenterTest {
 
     @Test
     public void getUserErrorTest() {
-        presenter = new MainPresenter(view, repository, schedulerProvider);
+        presenter = new MainPresenter(view, repository, schedulerProvider, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
         Mockito.when(repository.getAllUsers()).thenReturn(Flowable.error(new Exception()));
         presenter.getUsers();
-        Mockito.verify(view).allUserGetError("Error");
+        Mockito.verify(view).allUserGetError("Error getting all users");
     }
+
 
 }

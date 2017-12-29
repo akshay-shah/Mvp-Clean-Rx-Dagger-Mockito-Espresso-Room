@@ -11,11 +11,17 @@ import android.widget.Toast;
 
 
 import com.example.akshayshah.sampleexample.R;
+import com.example.akshayshah.sampleexample.UseCaseHandler;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.AddAllUsers;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.AddUser;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.GetAllUsers;
+import com.example.akshayshah.sampleexample.crudActivity.domain.usecase.RemoveUser;
 import com.example.akshayshah.sampleexample.data.User;
 import com.example.akshayshah.sampleexample.data.source.DataRepository;
 import com.example.akshayshah.sampleexample.di.AppComponent;
 import com.example.akshayshah.sampleexample.di.DaggerAppComponent;
 import com.example.akshayshah.sampleexample.di.DataModule;
+import com.example.akshayshah.sampleexample.di.UseCaseModule;
 import com.example.akshayshah.sampleexample.utils.schedulers.BaseSchedulerProvider;
 import com.example.akshayshah.sampleexample.utils.schedulers.SchedulerProvider;
 
@@ -34,6 +40,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     DataRepository mDataRepository;
     @Inject
     BaseSchedulerProvider schedulerProvider;
+    @Inject
+    RemoveUser removeUser;
+    @Inject
+    AddAllUsers addAllUsers;
+    @Inject
+    AddUser addUser;
+    @Inject
+    GetAllUsers getAllUsers;
+    @Inject
+    UseCaseHandler useCaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +58,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initViews();
 
         //Initializing DaggerAppComponent with Activity Context
-        AppComponent appComponent = DaggerAppComponent.builder().dataModule(new DataModule(this)).build();
+        AppComponent appComponent = DaggerAppComponent.builder().
+                dataModule(new DataModule(this)).
+                useCaseModule(new UseCaseModule()).
+                build();
         appComponent.inject(this);
 
-        presenter = new MainPresenter(this, mDataRepository, schedulerProvider);
+        presenter = new MainPresenter(this, mDataRepository, schedulerProvider, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
         final List<User> usersList = new ArrayList<>();
         usersList.add(new User(1, "akshay"));
         usersList.add(new User(2, "shriram"));
