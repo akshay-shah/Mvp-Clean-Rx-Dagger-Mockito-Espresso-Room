@@ -31,12 +31,6 @@ public class DataRepositoryTest {
     private LocalDataSource localDataSource;
     @Mock
     private RemoteDataSource remoteDataSource;
-    @Mock
-    private DataSource.UserPutCallback userPutCallback;
-    @Mock
-    private DataSource.UserRemoveCallback userRemoveCallback;
-    @Mock
-    private DataSource.UserListPutCallback userListPutCallback;
 
 
     private DataRepository dataRepository;
@@ -46,10 +40,6 @@ public class DataRepositoryTest {
             new User(3, "piyush"),
             new User(4, "vikram"));
 
-    @Captor
-    private ArgumentCaptor<DataSource.UserPutCallback> userPutCaptor;
-    @Captor
-    private ArgumentCaptor<DataSource.UserRemoveCallback> userRemoveCaptor;
 
     @Before
     public void setup() {
@@ -65,16 +55,14 @@ public class DataRepositoryTest {
 
     @Test
     public void putUserTest() {
-        dataRepository.putUser(user, userPutCallback);
-        Mockito.verify(localDataSource).putUser(eq(user), any(DataSource.UserPutCallback.class));
-        Mockito.verify(remoteDataSource).putUser(eq(user), any(DataSource.UserPutCallback.class));
+        dataRepository.putUser(user);
+        Mockito.verify(localDataSource).putUser(eq(user));
     }
 
     @Test
     public void removeUserTest() {
-        dataRepository.removeUser(user, userRemoveCallback);
-        Mockito.verify(localDataSource).removeUser(eq(user), any(DataSource.UserRemoveCallback.class));
-        Mockito.verify(remoteDataSource).removeUser(eq(user), any(DataSource.UserRemoveCallback.class));
+        dataRepository.removeUser(user);
+        Mockito.verify(localDataSource).removeUser(eq(user));
     }
 
     @Test
@@ -85,7 +73,7 @@ public class DataRepositoryTest {
 
     @Test
     public void putAllUsers() {
-        dataRepository.putAllusers(userList, userListPutCallback);
-        Mockito.verify(localDataSource).putAllusers(eq(userList), any(DataSource.UserListPutCallback.class));
+        dataRepository.putAllusers(userList);
+        Mockito.verify(localDataSource).putAllusers(eq(userList));
     }
 }

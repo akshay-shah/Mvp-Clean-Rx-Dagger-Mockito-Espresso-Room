@@ -64,8 +64,8 @@ public class MainActivityTest {
     @Test
     public void button_removeButtonTest() {
         Espresso.onView(withId(R.id.buttonAddUser)).perform(click());
-        Espresso.onView(withId(R.id.buttonGetUser)).perform(click());
         Espresso.onView(withId(R.id.buttonRemoveUser)).perform(click());
+        Espresso.onView(withId(R.id.buttonGetUser)).perform(click());
         Espresso.onView(withId(R.id.listViewAllUsers)).check(matches(not(hasDescendant(withText("akshay")))));
     }
 }

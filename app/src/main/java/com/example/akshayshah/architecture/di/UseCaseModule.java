@@ -1,8 +1,5 @@
 package com.example.akshayshah.architecture.di;
 
-import com.example.akshayshah.architecture.UseCaseHandler;
-import com.example.akshayshah.architecture.UseCaseScheduler;
-import com.example.akshayshah.architecture.UseCaseThreadPoolScheduler;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
@@ -24,10 +21,6 @@ import dagger.Provides;
 @Module(includes = DataModule.class)
 public class UseCaseModule {
 
-
-    @Inject
-    BaseSchedulerProvider schedulerProvider;
-
     @Provides
     AddAllUsers providesAddAllUsers(@Named("DataRepository") DataRepository dataRepository) {
         return new AddAllUsers(dataRepository);
@@ -45,16 +38,8 @@ public class UseCaseModule {
 
     @Provides
     GetAllUsers providesGetAllUsers(@Named("DataRepository") DataRepository dataRepository) {
-        return new GetAllUsers(dataRepository, new SchedulerProvider());
+        return new GetAllUsers(dataRepository);
     }
 
-    @Provides
-    UseCaseHandler providesUseCaseHandler(UseCaseScheduler scheduler) {
-        return new UseCaseHandler(scheduler);
-    }
 
-    @Provides
-    UseCaseScheduler providesUseCaseScheduler() {
-        return new UseCaseThreadPoolScheduler();
-    }
 }

@@ -1,14 +1,21 @@
 package com.example.akshayshah.architecture.data.source.remote;
 
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.RemoveUser;
 import com.example.akshayshah.architecture.data.User;
 import com.example.akshayshah.architecture.data.source.DataSource;
 import com.example.akshayshah.architecture.data.source.local.UserDAO;
+import com.example.akshayshah.architecture.utils.schedulers.SchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -25,23 +32,24 @@ public class RemoteDataSource implements DataSource {
 
 
     @Override
-    public void putUser(User user, UserPutCallback callback) {
-
-    }
-
-    @Override
-    public void removeUser(User user, UserRemoveCallback callback) {
-
-    }
-
-    @Override
-    public Flowable<List<User>> getAllUsers() {
+    public Single<AddUser.Response> putUser(User user) {
         return null;
     }
 
     @Override
-    public void putAllusers(List<User> users, UserListPutCallback callback) {
+    public Single<RemoveUser.Response> removeUser(User user) {
+        return null;
+    }
 
+    @Override
+    public Flowable<GetAllUsers.Response> getAllUsers() {
+        return null;
+    }
+
+
+    @Override
+    public Observable<AddAllUsers.Response> putAllusers(List<User> users) {
+        return null;
     }
 
 

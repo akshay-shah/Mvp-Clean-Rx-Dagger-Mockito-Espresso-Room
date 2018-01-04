@@ -7,6 +7,8 @@ import com.example.akshayshah.architecture.data.source.DataSource;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * Created by akshay.shah on 28/12/17.
  */
@@ -20,13 +22,8 @@ public class AddAllUsers extends UseCase<AddAllUsers.Request, AddAllUsers.Respon
     }
 
     @Override
-    protected void executeUseCase(Request requestValues) {
-        mDataRepository.putAllusers(requestValues.getmUserList(), new DataSource.UserListPutCallback() {
-            @Override
-            public void onAllUserPut() {
-                getUseCaseCallBack().onSuccess(new Response("Success Adding all users"));
-            }
-        });
+    protected Observable<AddAllUsers.Response> createObservable(Request mRequestValues) {
+        return mDataRepository.putAllusers(mRequestValues.getmUserList());
     }
 
     public static final class Request implements UseCase.Request {

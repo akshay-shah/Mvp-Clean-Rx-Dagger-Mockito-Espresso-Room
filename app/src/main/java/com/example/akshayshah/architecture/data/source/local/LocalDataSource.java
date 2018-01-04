@@ -1,15 +1,25 @@
 package com.example.akshayshah.architecture.data.source.local;
 
+import android.icu.lang.UScript;
+
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.RemoveUser;
 import com.example.akshayshah.architecture.data.User;
 import com.example.akshayshah.architecture.data.source.DataSource;
 import com.example.akshayshah.architecture.utils.AppExecutors;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -28,38 +38,25 @@ public class LocalDataSource implements DataSource {
 
 
     @Override
-    public void putUser(final User user, final UserPutCallback callback) {
-        appExecutors.diskIO().execute(new Runnable() {
+    public Single<AddUser.Response> putUser(User user) {
+        return Single.fromCallable(new Callable<AddUser.Response>() {
             @Override
-            public void run() {
-                mUserDao.putUser(user);
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onInsertSuccess();
-                    }
-                });
+            public AddUser.Response call() throws Exception {
+                long size = mUserDao.putUser(user);
+                return new AddUser.Response("Success " + size);
             }
         });
-
-
     }
 
     @Override
-    public void removeUser(final User user, final UserRemoveCallback callback) {
-        appExecutors.diskIO().execute(new Runnable() {
+    public Single<RemoveUser.Response> removeUser(User user) {
+        return Single.fromCallable(new Callable<RemoveUser.Response>() {
             @Override
-            public void run() {
-                mUserDao.deleteUser(user.getUserId());
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onRemoveSuccess();
-                    }
-                });
+            public RemoveUser.Response call() throws Exception {
+                int removedItems = mUserDao.deleteUser(user.getUserId());
+                return new RemoveUser.Response("Deleted " + removedItems);
             }
         });
-
     }
 
     /**
@@ -68,23 +65,23 @@ public class LocalDataSource implements DataSource {
      * @return Flowable Object
      */
     @Override
-    public Flowable<List<User>> getAllUsers() {
-        return mUserDao.getUser();
+    public Flowable<GetAllUsers.Response> getAllUsers() {
+        return Flowable.fromCallable(new Callable<GetAllUsers.Response>() {
+            @Override
+            public GetAllUsers.Response call() throws Exception {
+                GetAllUsers.Response response = new GetAllUsers.Response(mUserDao.getUser());
+                return response;
+            }
+        });
     }
 
     @Override
-    public void putAllusers(final List<User> users, final UserListPutCallback callback) {
-        appExecutors.diskIO().execute(new Runnable() {
+    public Observable<AddAllUsers.Response> putAllusers(final List<User> users) {
+        return Observable.fromCallable(new Callable<AddAllUsers.Response>() {
             @Override
-            public void run() {
-                for (User u : users)
-                    mUserDao.putUser(u);
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onAllUserPut();
-                    }
-                });
+            public AddAllUsers.Response call() throws Exception {
+                long size = mUserDao.putAllUsers(users).size();
+                return new AddAllUsers.Response("Success inserting " + size);
             }
         });
     }

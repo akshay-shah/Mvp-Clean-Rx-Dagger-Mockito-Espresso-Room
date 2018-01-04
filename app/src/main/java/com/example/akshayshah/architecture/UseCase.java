@@ -1,47 +1,31 @@
 package com.example.akshayshah.architecture;
 
+
+import android.arch.persistence.room.Insert;
+import android.util.Log;
+
+import com.example.akshayshah.architecture.utils.schedulers.BaseSchedulerProvider;
+import com.example.akshayshah.architecture.utils.schedulers.SchedulerProvider;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+
 /**
  * Created by akshay.shah on 28/12/17.
  */
 
 public abstract class UseCase<Q extends UseCase.Request, P extends UseCase.Response> {
 
-    private Q mRequestValues;
-    private UseCaseCallBack<P> useCaseCallBack;
-
-    void run() {
-        executeUseCase(mRequestValues);
-    }
-
-    protected abstract void executeUseCase(Q requestValues);
-
-    public UseCaseCallBack<P> getUseCaseCallBack() {
-        return useCaseCallBack;
-    }
-
-    public void setUseCaseCallBack(UseCaseCallBack<P> useCaseCallBack) {
-        this.useCaseCallBack = useCaseCallBack;
-    }
-
-    public Q getmRequestValues() {
-        return mRequestValues;
-    }
-
-    public void setmRequestValues(Q mRequestValues) {
-        this.mRequestValues = mRequestValues;
+    public Observable<P> executeUseCase(BaseSchedulerProvider schedulerProvider, Q requestValues) {
+        return createObservable(requestValues).subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui());
     }
 
     public interface Request {
-
     }
 
     public interface Response {
-
     }
 
-    public interface UseCaseCallBack<R> {
-        void onSuccess(R response);
-
-        void onFailure();
-    }
+    protected abstract Observable<P> createObservable(Q mRequestValues);
 }

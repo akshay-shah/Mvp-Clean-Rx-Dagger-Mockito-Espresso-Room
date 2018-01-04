@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 
 import com.example.akshayshah.architecture.R;
-import com.example.akshayshah.architecture.UseCaseHandler;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
@@ -45,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     AddUser addUser;
     @Inject
     GetAllUsers getAllUsers;
-    @Inject
-    UseCaseHandler useCaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 build();
         appComponent.inject(this);
 
-        presenter = new MainPresenter(this, mDataRepository, schedulerProvider, addUser, getAllUsers, removeUser, addAllUsers, useCaseHandler);
+        presenter = new MainPresenter(this, mDataRepository, schedulerProvider, addUser, getAllUsers, removeUser, addAllUsers);
         final List<User> usersList = new ArrayList<>();
         usersList.add(new User(1, "akshay"));
         usersList.add(new User(2, "shriram"));

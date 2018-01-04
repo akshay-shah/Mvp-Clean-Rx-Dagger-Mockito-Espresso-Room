@@ -5,6 +5,8 @@ import com.example.akshayshah.architecture.data.User;
 import com.example.akshayshah.architecture.data.source.DataRepository;
 import com.example.akshayshah.architecture.data.source.DataSource;
 
+import io.reactivex.Observable;
+
 /**
  * Created by akshay.shah on 28/12/17.
  */
@@ -18,21 +20,10 @@ public class AddUser extends UseCase<AddUser.Request, AddUser.Response> {
     }
 
     @Override
-    protected void executeUseCase(AddUser.Request requestValues) {
-        mDataRepository.putUser(requestValues.getmUser(), new DataSource.UserPutCallback() {
-            @Override
-            public void onInsertSuccess() {
-                getUseCaseCallBack().onSuccess(new Response("Success"));
-            }
-
-            @Override
-            public void onInsertFail() {
-                getUseCaseCallBack().onFailure();
-            }
-        });
-
-
+    protected Observable<Response> createObservable(Request mRequestValues) {
+        return null;
     }
+
 
     public static final class Request implements UseCase.Request {
         private final User mUser;

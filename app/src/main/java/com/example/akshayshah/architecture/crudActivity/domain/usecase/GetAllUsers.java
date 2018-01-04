@@ -7,6 +7,7 @@ import com.example.akshayshah.architecture.utils.schedulers.BaseSchedulerProvide
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -16,30 +17,16 @@ import io.reactivex.disposables.CompositeDisposable;
 public class GetAllUsers extends UseCase<GetAllUsers.Request, GetAllUsers.Response> {
 
     private DataRepository mDataRepository;
-    private BaseSchedulerProvider schedulerProvider;
-    private CompositeDisposable disposable = new CompositeDisposable();
 
-    public GetAllUsers(DataRepository mDataRepository, BaseSchedulerProvider schedulerProvider) {
+    public GetAllUsers(DataRepository mDataRepository) {
         this.mDataRepository = mDataRepository;
-        this.schedulerProvider = schedulerProvider;
     }
 
     @Override
-    public void executeUseCase(Request requestValues) {
-        disposable.add(mDataRepository.getAllUsers()
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe(
-                        users -> {
-                            if (users.size() > 0) {
-                                getUseCaseCallBack().onSuccess(new Response(users));
-                            } else {
-                                getUseCaseCallBack().onFailure();
-                            }
-                        },
-                        throwable -> getUseCaseCallBack().onFailure()
-                ));
+    protected Observable<Response> createObservable(Request mRequestValues) {
+        return mDataRepository.getAllUsers().toObservable();
     }
+
 
     public static final class Request implements UseCase.Request {
 

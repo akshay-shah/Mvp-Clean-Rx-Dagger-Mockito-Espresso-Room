@@ -1,7 +1,5 @@
 package com.example.akshayshah.architecture.crudActivity;
 
-import com.example.akshayshah.architecture.UseCase;
-import com.example.akshayshah.architecture.UseCaseHandler;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
 import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
@@ -28,15 +26,13 @@ public class MainPresenter implements MainContract.Presenter {
     private AddAllUsers addAllUsers;
     private GetAllUsers getAllUsers;
     private RemoveUser removeUser;
-    private final UseCaseHandler mUseCaseHandler;
 
     public MainPresenter(MainContract.View view, DataSource mRepository,
                          BaseSchedulerProvider schedulerProvider,
                          AddUser addUser,
                          GetAllUsers getAllUsers,
                          RemoveUser removeUser,
-                         AddAllUsers addAllUsers,
-                         UseCaseHandler mUseCaseHandler) {
+                         AddAllUsers addAllUsers) {
         mLoginView = view;
         this.mRepository = mRepository;
         this.schedulerProvider = schedulerProvider;
@@ -44,7 +40,6 @@ public class MainPresenter implements MainContract.Presenter {
         this.removeUser = removeUser;
         this.getAllUsers = getAllUsers;
         this.addAllUsers = addAllUsers;
-        this.mUseCaseHandler = mUseCaseHandler;
     }
 
     @Override
@@ -60,66 +55,42 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void addUser(User user) {
-        AddUser.Request request = new AddUser.Request(user);
-        mUseCaseHandler.execute(addUser, request, new UseCase.UseCaseCallBack<AddUser.Response>() {
-            @Override
-            public void onSuccess(AddUser.Response response) {
-                mLoginView.addSuccess(response.getResponse());
-            }
-
-            @Override
-            public void onFailure() {
-                mLoginView.addError("Error adding user");
-            }
-        });
     }
 
     @Override
     public void removeUser(User user) {
         RemoveUser.Request request = new RemoveUser.Request(user);
-        mUseCaseHandler.execute(removeUser, request, new UseCase.UseCaseCallBack<RemoveUser.Response>() {
-            @Override
-            public void onSuccess(RemoveUser.Response response) {
-                mLoginView.removeSuccess(response.getResponse());
-            }
-
-            @Override
-            public void onFailure() {
-                mLoginView.removeError("Error removing user");
-            }
-        });
+        disposable.add(removeUser.executeUseCase(schedulerProvider, request)
+                .subscribe(response -> {
+                            mLoginView.removeSuccess(response.getResponse());
+                        },
+                        throwable -> {
+                            mLoginView.removeError("Error removing user");
+                        }));
     }
 
     @Override
     public void putUsers(List<User> users) {
         AddAllUsers.Request request = new AddAllUsers.Request(users);
-        mUseCaseHandler.execute(addAllUsers, request, new UseCase.UseCaseCallBack<AddAllUsers.Response>() {
-            @Override
-            public void onSuccess(AddAllUsers.Response response) {
-                mLoginView.allUserPutSuccess(response.getResponse());
-            }
-
-            @Override
-            public void onFailure() {
-                mLoginView.allUserGetError("Error adding all users");
-            }
-        });
+        disposable.add(addAllUsers.executeUseCase(schedulerProvider, request)
+                .subscribe(response -> {
+                            mLoginView.allUserPutSuccess(response.getResponse());
+                        },
+                        throwable -> {
+                            mLoginView.allUserPutError("Error putting users");
+                        }));
     }
 
     @Override
     public void getUsers() {
         GetAllUsers.Request request = new GetAllUsers.Request();
-        mUseCaseHandler.execute(getAllUsers, request, new UseCase.UseCaseCallBack<GetAllUsers.Response>() {
-            @Override
-            public void onSuccess(GetAllUsers.Response response) {
-                mLoginView.allUserGetSuccess(response.getmUserList());
-            }
-
-            @Override
-            public void onFailure() {
-                mLoginView.allUserGetError("Error getting all users");
-            }
-        });
+        disposable.add(getAllUsers.executeUseCase(schedulerProvider, request)
+                .subscribe(response -> {
+                            mLoginView.allUserGetSuccess(response.getmUserList());
+                        },
+                        throwable -> {
+                            mLoginView.allUserGetError("Error getting users");
+                        }));
     }
 
 }

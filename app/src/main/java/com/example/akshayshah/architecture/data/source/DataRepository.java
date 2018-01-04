@@ -1,5 +1,9 @@
 package com.example.akshayshah.architecture.data.source;
 
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.AddUser;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.GetAllUsers;
+import com.example.akshayshah.architecture.crudActivity.domain.usecase.RemoveUser;
 import com.example.akshayshah.architecture.data.User;
 import com.example.akshayshah.architecture.data.source.local.LocalDataSource;
 import com.example.akshayshah.architecture.data.source.remote.RemoteDataSource;
@@ -8,7 +12,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -25,32 +32,26 @@ public class DataRepository implements DataSource {
         this.mRemoteDataSource = mRemoteDataSource;
     }
 
+
     @Override
-    public void putUser(User user, UserPutCallback callback) {
-        mLocalDataSource.putUser(user,callback);
-        mRemoteDataSource.putUser(user,callback);
+    public Single<AddUser.Response> putUser(User user) {
+        return mLocalDataSource.putUser(user);
     }
 
     @Override
-    public void removeUser(User user, UserRemoveCallback callback) {
-        mLocalDataSource.removeUser(user,callback);
-        mRemoteDataSource.removeUser(user,callback);
+    public Single<RemoveUser.Response> removeUser(User user) {
+        return mLocalDataSource.removeUser(user);
     }
 
-    /**
-     * Using RxJava
-     *
-     * @return Flowable Object
-     */
     @Override
-    public Flowable<List<User>> getAllUsers() {
+    public Flowable<GetAllUsers.Response> getAllUsers() {
         return mLocalDataSource.getAllUsers();
     }
 
+
     @Override
-    public void putAllusers(List<User> users, UserListPutCallback callback) {
-        mLocalDataSource.putAllusers(users, callback);
-        mRemoteDataSource.putAllusers(users, callback);
+    public Observable<AddAllUsers.Response> putAllusers(List<User> users) {
+        return mLocalDataSource.putAllusers(users);
     }
 
 

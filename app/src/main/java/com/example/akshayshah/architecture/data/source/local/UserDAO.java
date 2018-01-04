@@ -11,6 +11,7 @@ import com.example.akshayshah.architecture.data.User;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 /**
  * Created by akshay.shah on 08/12/17.
@@ -20,17 +21,20 @@ public interface UserDAO {
 
     //Returning Flowable object via Room Database
     @Query("SELECT * FROM Users")
-    Flowable<List<User>> getUser();
+    List<User> getUser();
 
     @Query("SELECT * FROM Users where UserId = :id")
     User getUserbyId(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void putUser(User user);
+    Long putUser(User user);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateUser(User user);
 
     @Query("DELETE FROM Users where UserId = :userId")
-    void deleteUser(int userId);
+    int deleteUser(int userId);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    List<Long> putAllUsers(List<User> users);
 }

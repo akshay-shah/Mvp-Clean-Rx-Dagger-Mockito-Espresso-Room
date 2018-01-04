@@ -5,6 +5,8 @@ import com.example.akshayshah.architecture.UseCase;
 import com.example.akshayshah.architecture.data.User;
 import com.example.akshayshah.architecture.data.source.DataSource;
 
+import io.reactivex.Observable;
+
 /**
  * Created by akshay.shah on 28/12/17.
  */
@@ -18,20 +20,10 @@ public class RemoveUser extends UseCase<RemoveUser.Request, RemoveUser.Response>
     }
 
     @Override
-    protected void executeUseCase(RemoveUser.Request requestValues) {
-        mDataRepository.removeUser(requestValues.getmUser(), new DataSource.UserRemoveCallback() {
-            @Override
-            public void onRemoveSuccess() {
-                getUseCaseCallBack().onSuccess(new Response("Success Removing user"));
-            }
-
-            @Override
-            public void onRemoveFail() {
-                getUseCaseCallBack().onFailure();
-            }
-        });
-
+    protected Observable<Response> createObservable(Request mRequestValues) {
+        return mDataRepository.removeUser(mRequestValues.getmUser()).toObservable();
     }
+
 
     public static final class Request implements UseCase.Request {
         private final User mUser;
