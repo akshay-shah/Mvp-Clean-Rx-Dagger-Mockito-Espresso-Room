@@ -44,7 +44,7 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public Flowable<GetAllUsers.Response> getAllUsers() {
+    public Flowable<List<User>> getAllUsers() {
         return mLocalDataSource.getAllUsers();
     }
 

@@ -82,7 +82,7 @@ public class MainActivityPresenterTest {
 
     @Test
     public void getUserSuccessTest() {
-        Mockito.when(repository.getAllUsers()).thenReturn(Flowable.just(new GetAllUsers.Response(users)));
+        Mockito.when(repository.getAllUsers()).thenReturn(Flowable.just(users));
         presenter.getUsers();
         Mockito.verify(view).allUserGetSuccess(eq(users));
     }

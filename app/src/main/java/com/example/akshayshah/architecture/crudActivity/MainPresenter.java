@@ -84,9 +84,9 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void getUsers() {
         GetAllUsers.Request request = new GetAllUsers.Request();
-        disposable.add(getAllUsers.executeUseCase(schedulerProvider, request)
+        disposable.add(getAllUsers.executeFlowableUseCase(schedulerProvider, request)
                 .subscribe(response -> {
-                            mLoginView.allUserGetSuccess(response.getmUserList());
+                            mLoginView.allUserGetSuccess(response);
                         },
                         throwable -> {
                             mLoginView.allUserGetError("Error getting users");

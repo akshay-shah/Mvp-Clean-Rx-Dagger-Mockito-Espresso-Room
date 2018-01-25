@@ -42,7 +42,7 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Flowable<GetAllUsers.Response> getAllUsers() {
+    public Flowable<List<User>> getAllUsers() {
         return null;
     }
 

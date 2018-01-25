@@ -7,6 +7,7 @@ import com.example.akshayshah.architecture.utils.schedulers.BaseSchedulerProvide
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -24,9 +25,14 @@ public class GetAllUsers extends UseCase<GetAllUsers.Request, GetAllUsers.Respon
 
     @Override
     protected Observable<Response> createObservable(Request mRequestValues) {
-        return mDataRepository.getAllUsers().toObservable();
+        return null;
     }
 
+
+    @Override
+    public Flowable<List<User>> createFlowable(Request mRequestValues) {
+        return mDataRepository.getAllUsers();
+    }
 
     public static final class Request implements UseCase.Request {
 

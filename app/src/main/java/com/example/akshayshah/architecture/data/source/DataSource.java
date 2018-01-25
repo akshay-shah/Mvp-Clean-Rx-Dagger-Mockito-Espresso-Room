@@ -23,7 +23,7 @@ public interface DataSource {
 
     Single<RemoveUser.Response> removeUser(User user);
 
-    Flowable<GetAllUsers.Response> getAllUsers();
+    Flowable<List<User>> getAllUsers();
 
     Observable<AddAllUsers.Response> putAllusers(List<User> users);
 

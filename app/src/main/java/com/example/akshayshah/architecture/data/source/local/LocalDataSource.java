@@ -65,14 +65,8 @@ public class LocalDataSource implements DataSource {
      * @return Flowable Object
      */
     @Override
-    public Flowable<GetAllUsers.Response> getAllUsers() {
-        return Flowable.fromCallable(new Callable<GetAllUsers.Response>() {
-            @Override
-            public GetAllUsers.Response call() throws Exception {
-                GetAllUsers.Response response = new GetAllUsers.Response(mUserDao.getUser());
-                return response;
-            }
-        });
+    public Flowable<List<User>> getAllUsers() {
+        return mUserDao.getUser();
     }
 
     @Override

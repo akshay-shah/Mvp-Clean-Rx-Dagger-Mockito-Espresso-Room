@@ -21,7 +21,7 @@ public interface UserDAO {
 
     //Returning Flowable object via Room Database
     @Query("SELECT * FROM Users")
-    List<User> getUser();
+    Flowable<List<User>> getUser();
 
     @Query("SELECT * FROM Users where UserId = :id")
     User getUserbyId(int id);
