@@ -34,20 +34,20 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //RoomDatabase
-    compile "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     implementation "android.arch.persistence.room:rxjava2:1.0.0"
     //Dagger 2
-    compile "com.google.dagger:dagger-android:$rootProject.daggerVersion"
-    compile "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
     // if you use the support libraries
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     //RxJava & RxAndroid
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJava"
     
     //Testing
-    testCompile 'org.mockito:mockito-core:2.13.0'
-    testCompile "org.robolectric:robolectric:$rootProject.roboElectricVerion"
+    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testImplementation "org.robolectric:robolectric:$rootProject.roboElectricVerion"
 }
